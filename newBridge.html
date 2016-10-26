@@ -26,10 +26,10 @@ Hello demo 2
 
     /* Initialize your app here */
 
-    bridge.registerHandler('JS Echo', function(data, responseCallback) {
+   /* bridge.registerHandler('JS Echo', function(data, responseCallback) {
         console.log("JS Echo called with:", data)
         responseCallback(data)
-    })
+    })*/
     /*bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
         console.log("JS received response:", responseData)
     })*/
@@ -125,5 +125,5 @@ Hello demo 2
 	
 	</script>
 	<div id='buttons'></div> <div id='log'></div>
-	<button type="button"  onclick="WebViewJavascriptBridge.callHandler("Log", {"Foo" : "Bar"});">Click Me!</button>
+	<button type="button"  onclick="window.WebViewJavascriptBridge.callHandler('Log', {'Foo' : 'Bar'});">Click Me!</button>
 </body>
