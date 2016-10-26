@@ -11,9 +11,6 @@ Hello demo 2
 	window.onerror = function(err) {
 		console.log('window.onerror: ' + err)
 	}
-
-	window.WebViewJavascriptBridge = {};
-
 	function setupWebViewJavascriptBridge(callback) {
 	    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
 	    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
