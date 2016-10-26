@@ -12,6 +12,8 @@ Hello demo 2
 		console.log('window.onerror: ' + err)
 	}
 
+	window.WebViewJavascriptBridge = {};
+
 	function setupWebViewJavascriptBridge(callback) {
 	    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
 	    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
@@ -31,9 +33,9 @@ Hello demo 2
         console.log("JS Echo called with:", data)
         responseCallback(data)
     })
-    bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
+    /*bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
         console.log("JS received response:", responseData)
-    })
+    })*/
 })
 
 /*	var Bridge = {
@@ -126,5 +128,5 @@ Hello demo 2
 	
 	</script>
 	<div id='buttons'></div> <div id='log'></div>
-	<button type="button"  onclick="WebViewJavascriptBridge.callHandler("Log", "Foo");">Click Me!</button>
+	<button type="button"  onclick="WebViewJavascriptBridge.callHandler("Log", {"Foo" : "Bar"});">Click Me!</button>
 </body>
