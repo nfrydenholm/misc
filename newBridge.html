@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+Hello demo 2
+	<script>
+	window.onerror = function(err) {
+		log('window.onerror: ' + err)
+	}
+
+	function setupWebViewJavascriptBridge(callback) {
+	    if (window.WebViewJavascriptBridge) { return callback(WebViewJavascriptBridge); }
+	    if (window.WVJBCallbacks) { return window.WVJBCallbacks.push(callback); }
+	    window.WVJBCallbacks = [callback];
+	    var WVJBIframe = document.createElement('iframe');
+	    WVJBIframe.style.display = 'none';
+	    WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+	    document.documentElement.appendChild(WVJBIframe);
+	    setTimeout(function() { document.documentElement.removeChild(WVJBIframe) }, 0)
+	}
+
+	setupWebViewJavascriptBridge(function(bridge) {
+
+    /* Initialize your app here */
+
+    bridge.registerHandler('JS Echo', function(data, responseCallback) {
+        console.log("JS Echo called with:", data)
+        responseCallback(data)
+    })
+    bridge.callHandler('ObjC Echo', {'key':'value'}, function responseCallback(responseData) {
+        console.log("JS received response:", responseData)
+    })
+})
+
+/*	var Bridge = {
+
+    init: function() {
+    	alert('hello');
+        this.connectBridge(this.listener);
+    },
+
+    connectBridge: function connectBridge(callback) {
+        if (window.WebViewJavascriptBridge) {
+            callback(WebViewJavascriptBridge)
+        } 
+        else {
+            document.addEventListener('WebViewJavascriptBridgeReady', function() {
+            	alert('hey')
+                callback(WebViewJavascriptBridge);
+            }, false);
+        }
+    },
+
+    listener: function listener(bridge) {
+        //the bridge.init function receives all messages sent from Obj-C
+        bridge.init(function(message, responseCallback) {
+        	alert('message from objc');
+            
+        });
+    },
+
+    send: function send(data, callback) {
+    	alert('send')
+        if(callback) {
+            WebViewJavascriptBridge.send(data, callback);
+        }
+        else {
+            WebViewJavascriptBridge.send(data);
+        }
+
+
+    }
+
+
+};*/
+	
+	
+
+		/*document.body.appendChild(document.createElement('br'))
+
+		var button = document.getElementById('buttons').appendChild(document.createElement('button'))
+		button.innerHTML = 'track event'
+		button.onclick = function(e) {
+			e.preventDefault()
+			var data = {'tracking' : {'event': 'sendTrackingEvent', 'trackingEventCategory' : 'SYI', 'trackingEventAction' : 'SYI_Started', 'trackingEventLabel' : 'Label value'}}
+			//log('JS sending message', data)
+			bridge.send(data, function(responseData) {
+			//	log('JS got response', responseData)
+			})
+		}
+
+		document.body.appendChild(document.createElement('br'))
+
+		var button = document.getElementById('buttons').appendChild(document.createElement('button'))
+		button.innerHTML = 'track ecommerce'
+		button.onclick = function(e) {
+			e.preventDefault()
+			var products = [{'name' : 'car ad', 'category' : 'some category', 'price' : '199'}]
+			var data = {'tracking' : {'event': 'sendTransaction', 'transactionId' : '232423', 'transactionAffiliation' : 'BilBasen', 'transactionTax' : '0.0', 'products' : products}}
+			//log('JS sending message', data)
+			Bridge.send(data, function(responseData) {
+			//	log('JS got response', responseData)
+			})
+		}
+
+
+/*		var callbackButton = document.getElementById('buttons').appendChild(document.createElement('button'))
+		callbackButton.innerHTML = 'Fire testObjcCallback'
+		callbackButton.onclick = function(e) {
+			e.preventDefault()
+			log('JS calling handler "testObjcCallback"')
+			bridge.callHandler('testObjcCallback', {'foo': 'bar'}, function(response) {
+				log('JS got response', response)
+			})
+		}
+		*/
+/*		Bridge.send({'title' : 'Awesome title from web'}, function(responseData) {
+			log('JS got response', responseData)
+		})
+		log('user agent', navigator.userAgent)
+*/
+	
+	</script>
+	<div id='buttons'></div> <div id='log'></div>
+	<button type="button"  onclick="bridge.callHandler("Log", "Foo");">Click Me!</button>
+</body>
